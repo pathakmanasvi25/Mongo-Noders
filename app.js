@@ -31,7 +31,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "please fill"]
     },
-    id: Number
+    id: Number,
+    cpassword: {
+        type: String,
+        required: [true, "please fill"]
+    }
+    
 });
 const User = mongoose.model("User", userSchema);
 const total = 200, gen = 130, special = 70;
@@ -66,6 +71,7 @@ app.post("/sign_up", function (req, res) {
         phno: req.body.phno,
         password: req.body.password,
         type: req.body.type,
+        cpassword:req.body.cpassword
     });
 
 
@@ -80,21 +86,27 @@ app.post("/sign_up", function (req, res) {
     //    if(user.name==="Manager")
     //    user.id=2;
     user.save();
-    res.redirect("/login");
+    if(user.password===user.cpassword){
+        res.redirect("/login");
+    }
+    else
+    {
+        res.write("Password did not match");
+    }
 });
 
 
-app.post("/index" , function(req,res)
-{
+// app.post("/index" , function(req,res)
+// {
 
-    const chosenDate = req.body.date;
-    const userid=user.id;
-    const newroom=new Room(
-        {
-            if(userid===3)
-        }
-    )
-})
+//     const chosenDate = req.body.date;
+//     const userid=user.id;
+//     const newroom=new Room(
+//         {
+//             if(userid===3)
+//         }
+//     )
+// })
 app.post("/s", function (req, res) {
     res.redirect("/sign_up");
 });
@@ -119,7 +131,8 @@ app.post("/login", async function (req, res) {
     const actualName = data.name;
     const actualId = data.id;
     if (pass === actualPassword) {
-        res.render("index", { username: actualName, id: actualId });
+        // res.render("index", { username: actualName, id: actualId });
+        res.send("authenticated");
 
     }
     else {
