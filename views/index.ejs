@@ -1,12 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
+
 <body>
-    <h1>Welcome <%=userName:name%></h1>
+
+
+    <h1>Welcome <%=username%></h1>
+
+    <form action="/index" method="post">
+        Choose when you'll be arriving!
+        <input type="date" name="date" min="2023-06-21" max="2023-06-27">
+
+        <% const id= <%=id%> ; %>
+        <%if(id===3) {%>
+        <label for="select">Choose your room type</label>
+
+        <select name="stor" id="select">
+
+            <option value="gen">General Rooms-Two Double Beds + One Single Bed</option>
+            <option value="spe">Special Rooms- Three Double beds + Two Single Beds</option>
+        </select>
+
+        <%const value = $('#select').find(":selected").val(); %>
+
+        <%if(value==="gen"){ %>
+        Please enter number of rooms you need:
+        <input type="number" name="submitG" min="1" max="3">
+        <input type="submit" value="Book your General Room!" name="Groom" id="genroom" />
+        <% } else { %>
+        Request your stay in the special room from the manager!
+
+        <form action="/req" method="post">
+            Number of adult monsters:
+            <input type="number" name="adultm" id="">
+            Number of underage monsters:
+            <input type="number" name="childm" id="">
+            Any message:
+            <input type="text" name="mssg" id="">
+            <input type="submit" value="Send request!" name="submitS" id="sproom" />
+        </form>
+
+        <% } %>
+
+
+        <% } %>
+        <%else if(id ===4){ %>
+            Please enter number of rooms you need:
+            <input type="number" name="submitG" min="1" max="2">
+            <input type="submit" value="Book your General Room!" name="Groom" id="genroom" />
+        <%}%>
+
+
+    </form>
+
 </body>
+
 </html>
