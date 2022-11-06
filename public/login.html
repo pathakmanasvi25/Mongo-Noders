@@ -1,41 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+   
+	<a href="https://front.codes/" class="logo" target="_blank">
+		<img src="#" alt="">
+	</a>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-
-            </div>
-            <div class="col-md-6 main">
-                <form action="/login" method="post">
-                    <h2>Login</h2>
-                     <label for="email">Email:</label>
-                    <input type="email" class="box" id="email" name="lemail" placeholder="Email" required />
-                    <br>
-                    <label for="password">Password:</label>
-                    <input type="password" class="box" id="password" name="lpassword" placeholder="Password" required />
-                    <br>
-                    <input type="submit" value="Submit" id="submit" />
-                </form>
-                <a href="/signup.html">new User SignUP</a>
-            </div>
-            <div class="col-md-3">
-            </div>
-        </div>
-    </div>
-
+	<div class="section">
+		<div class="container">
+			<div class="row full-height justify-content-center">
+				<div class="col-12 text-center align-self-center py-5">
+					<div class="section pb-5 pt-5 pt-sm-2 text-center">
+						<h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
+			          	<input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+			          	<label for="reg-log"></label>
+						<div class="card-3d-wrap mx-auto">
+							<div class="card-3d-wrapper">
+								<div class="card-front">
+									<div class="center-wrap">
+										<div class="section text-center">
+											<h4 class="mb-4 pb-3">Log In</h4>
+                                            <form action="/login" method="post">
+											<div class="form-group">
+												<input type="email" name="lemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off" required>
+												<i class="input-icon uil uil-at"></i>
+											</div>	
+											<div class="form-group mt-2">
+												<input type="password" name="lpassword" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off" required>
+												<i class="input-icon uil uil-lock-alt"></i>
+											</div>
+                                            <input type="submit" name="submit" id="submit" class="btn mt-4" value="Sign IN" />
+                            				<p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
+                                            </form>
+				      					</div>
+			      					</div>
+			      				</div>
+								<div class="card-back">
+									<div class="center-wrap">
+										<div class="section text-center">
+											<h4 class="mb-4 pb-3">Sign Up</h4>
+                                            <form action="/sign_up" method="post">
+											<div class="form-group">
+												<input type="text" name="name" class="form-style" placeholder="Your Full Name" id="logname" autocomplete="off">
+												<i class="input-icon uil uil-user"></i>
+											</div>	
+											<div class="form-group mt-2">
+												<input type="email" name="email" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
+												<i class="input-icon uil uil-at"></i>
+											</div>	
+                                            <div class="form-group">
+												<input type="number" name="phno" class="form-style" placeholder="Your contact no" id="logname" autocomplete="off">
+												<i class="input-icon uil uil-user"></i>
+											</div>
+                                            <div class="form-group">
+												<select name="type" id="" class="form-style" required>
+                                                    <option value="choose" >Choose One</option>
+                                                    <option value="monster" class="form-input input">Monster</option>
+                                                    <option value="human" class="form-input input">Human</option>
+                                                </select> 
+												<i class="input-icon uil uil-user"></i>
+											</div>
+											<div class="form-group mt-2">
+												<input type="password" name="password" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+												<i class="input-icon uil uil-lock-alt"></i>
+											</div>
+                                            <div class="form-group mt-2">
+												<input type="password" name="cpassword" class="form-style" placeholder="Confirm Password" id="logpass" autocomplete="off">
+												<i class="input-icon uil uil-lock-alt"></i>
+											</div>
+                                            <input type="submit" name="submit" id="submit" class="btn mt-4" value="Sign up" />
+											
+                                            </form>
+				      					</div>
+			      					</div>
+			      				</div>
+			      			</div>
+			      		</div>
+			      	</div>
+		      	</div>
+	      	</div>
+	    </div>
+	</div>
 </body>
-
 </html>

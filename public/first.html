@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="first.css">
+</head>
+<body>
+    <div class="overlay">
+       
+        <form action="/login" method="post">
+          
+           <div class="con">
+           <!--     Start  header Content  -->
+           <header class="head-form">
+              <h2>Log In</h2>
+              <!--     A welcome message or an explanation of the login form -->
+              <p>login here using your username and password</p>
+           </header>
+           <!--     End  header Content  -->
+           <br>
+           <div class="field-set">
+             
+              <!--   user name -->
+                 <span class="input-item">
+                   <i class="fa fa-user-circle"></i>
+                 </span>
+                <!--   user name Input-->
+       
+                 <input type="email" class="form-input" id="txt-input" name="lemail" placeholder="Email" required />
+              <br>
+             
+                   <!--   Password -->
+             
+              <span class="input-item">
+                <i class="fa fa-key"></i>
+               </span>
+              <!--   Password Input-->
+            
+              
+            <input type="password" class="form-input" id="pwd" name="lpassword" placeholder="Password" required />
+        <!--      Show/hide password  -->
+             <span>
+                <i class="fa fa-eye" aria-hidden="true"  type="button" id="eye"></i>
+             </span>
+             
+             
+              <br>
+        <!--        buttons -->
+        <!--      button LogIn -->
+              <button class="log-in" type="submit"> Log In </button>
+           </div>
+          
+        <!--   other buttons -->
+           <div class="other">
+        <!--      Forgot Password button-->
+              <button class="btn submits frgt-pass">Forgot Password</button>
+        
+              <button  class="btn submits sign-up" onclick="C:\Users\prana\OneDrive\Desktop\avishkaar\Mongo-Noders\public\signup.html">Sign Up 
+        <!--         Sign Up font icon -->
+              <i class="fa fa-user-plus" aria-hidden="true"></i>
+              </button>
+        <!--      End Other the Division -->
+           </div>
+             
+        <!--   End Conrainer  -->
+          </div>
+          
+          <!-- End Form -->
+        </form>
+        </div>
+        <script src="/public/first.js"></script>
+</body>
+</html>
