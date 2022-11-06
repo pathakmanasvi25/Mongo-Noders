@@ -9,7 +9,8 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"));
 mongoose.connect("mongodb://127.0.0.1/signupDB", { useNewUrlParser: true });
 var db = mongoose.connection;
-
+var T=1;
+var actualName="";
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -75,7 +76,7 @@ app.post("/sign_up", function (req, res) {
     });
 
 
-    if (user.type === "Monster") {
+    if (user.type === "monster") {
         user.id = 3;
     }
     else
@@ -96,17 +97,6 @@ app.post("/sign_up", function (req, res) {
 });
 
 
-// app.post("/index" , function(req,res)
-// {
-
-//     const chosenDate = req.body.date;
-//     const userid=user.id;
-//     const newroom=new Room(
-//         {
-//             if(userid===3)
-//         }
-//     )
-// })
 app.post("/s", function (req, res) {
     res.redirect("/sign_up");
 });
@@ -123,23 +113,91 @@ app.get("/sign_up", function (req, res) {
 app.get("/login", function (req, res) {
     res.sendFile(__dirname + "/public/login.html")
 })
+
+
 app.post("/login", async function (req, res) {
     const pass = req.body.lpassword;
     const mail = req.body.lemail;
     const data = await db.collection("users").findOne({ email: mail });
     const actualPassword = data.password;
-    const actualName = data.name;
+    actualName = data.name;
     const actualId = data.id;
     if (pass === actualPassword) {
-        // res.render("index", { username: actualName, id: actualId });
-        res.send("authenticated");
-
+        
+        if(actualId===3){
+         
+           res.render("monster" , { username: actualName, userId: actualId } );
+          }
+          else if(actualId===4)
+          res.render("human" , { username: actualName, userId: actualId } )
     }
     else {
         res.send("wrongPassword");
     }
 
 });
+
+app.post("/reqg" ,  function(req,res)
+{
+    res.sendFile(__dirname+"/public/gen.html");
+});
+
+app.post("/reqs" ,  function(req,res)
+{
+    res.sendFile(__dirname+"/public/special.html");
+});
+
+app.post("/bookG" , async function(req,res){
+    const chosenDate = req.body.date;
+    const datad = await db.collection("users").findOne({ name: actualName });
+    const addroom=new Room({
+        tor:"General",
+        date: chosenDate,
+        bookedBy: datad,
+        roomNo: (100 + ++T)
+    });
+    addroom.save();
+
+});
+app.post("/bookS", function(req,res)
+{
+
+});
+
+app.post("/humang" ,  function(req,res)
+{
+    if((T+100)<gen)
+    res.sendFile(__dirname+"/public/gen.html");
+    else
+    res.sendFile(_dirname + "/public/reqDrac.html");
+});
+
+app.post("/HbookS" , function(req,res)
+{
+
+    const relationWithMavis=req.body.relation;
+
+    
+    function myFunction() {
+        // Get the checkbox
+        var checkBox = document.getElementById("myCheck");
+        // Get the output text
+        var text = document.getElementById("text");
+      
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true){
+          text.style.display = "block";
+        } else {
+          text.style.display = "none";
+        }
+      }
+
+      const relationWithMonster= req.body.relwm;
+      const request=req.body.finalRequest;
+
+
+})
+
 app.listen(3000, function () {
     console.log("listening at 3000");
 });

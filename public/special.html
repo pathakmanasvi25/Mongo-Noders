@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Request your stay in the special room from the manager!
+
+    <form action="/bookS" method="post">
+        Choose when you'll be arriving!
+        <input type="date" name="date" min="2023-06-21" max="2023-06-27">
+
+        Number of adult monsters:
+        <input type="number" name="adultm" id="">
+        Number of underage monsters:
+        <input type="number" name="childm" id="">
+        Any message:
+        <input type="text" name="mssg" id="">
+        <input type="submit" value="Send request!" name="submitS" id="sproom" />
+    </form>
+</body>
+
+</html>
