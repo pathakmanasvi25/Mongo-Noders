@@ -8,8 +8,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views' , __dirname+'/views');
 app.use(express.static("public"));
-mongoose.connect("mongodb://127.0.0.1/signupDB", { useNewUrlParser: true });
-var db = mongoose.connection;
+mongoose.connect("mongodb://127.0.0.1/signupDB",{useNewUrlParser:true});
+const db=mongoose.connection;
+
 var T = 1;
 var actualName = "";
 const userSchema = new mongoose.Schema({
@@ -50,7 +51,7 @@ const roomSchema = new mongoose.Schema({
         type: String, //typeofroom
         required: [true]
     },
-    date: {
+    rdate: {
         type: Date,
         required: [true]
     },
@@ -64,8 +65,9 @@ const roomSchema = new mongoose.Schema({
 const Room = mongoose.model("Room", roomSchema);
 
 const permissionSchema = new mongoose.Schema({
-       date: {type: Date,
-        required: [true]},
+       pdate: {type: Date,
+            //    required:[true]
+             },
     rwMavis: {
        type: String,
         required: [true]
@@ -86,7 +88,7 @@ const permissionSchema = new mongoose.Schema({
 const Permission = mongoose.model("Permission", permissionSchema);
 
 const managerSchema = new mongoose.Schema({
-    date: {type: Date,
+    mdate: {type: Date,
         required: [true]},
     adult: {
       type:  Number,
@@ -102,53 +104,40 @@ const managerSchema = new mongoose.Schema({
 
 const Manager = mongoose.model("Manager", managerSchema);
 
-app.post("/sign_up", function (req, res) {
-    const user = new User({
-        name: req.body.name,
-        email: req.body.email,
-        phno: req.body.phno,
-        password: req.body.password,
-        type: req.body.type,
-        cpassword: req.body.cpassword
-    });
 
+app.get("/",function(req,res){
+    
+    res.sendFile(__dirname+"/public/index.html");
+});
+app.post("/sign_up",function(req,res){
+   const pass=req.body.password;
+  const cpass=req.body.cpassword;
+  if(pass===cpass){
+    const user=new User({
+         name:req.body.name,
+         email:req.body.email,
+         phno:req.body.phno,
+         password:pass,
+         type:req.body.type,
+         cpassword:cpass
+   });
+   user.save();
+   if(user.type==="monster"){
+    user.id=3
+   }else{
+    user.id=4;
+   }
+      res.redirect("/");
+ }
 
-    if (user.type === "monster") {
-        user.id = 3;
-    }
-    else
-        user.id = 4;
-
-    //    if(user.name==="Count Dracula")
-    //    user.id=1;
-    //    if(user.name==="Manager")
-    //    user.id=2;
-    user.save();
-    if (user.password === user.cpassword) {
-        res.redirect("/login");
-    }
-    else {
-        res.write("Password did not match");
-    }
+     else{
+           res.write("<h1>password did not match</h1>");
+     }
+ });
+app.post("/s",function(req,res){
+    res.sendFile(__dirname+"/public/login.html")
 });
 
-
-app.post("/s", function (req, res) {
-    res.redirect("/sign_up");
-});
-app.post("/l", function (req, res) {
-    res.redirect("/login");
-});
-app.get("/", function (req, res) {
-
-    res.sendFile(__dirname + "/public/home.html");
-});
-app.get("/sign_up", function (req, res) {
-    res.sendFile(__dirname + "/public/signup.html")
-})
-app.get("/login", function (req, res) {
-    res.sendFile(__dirname + "/public/login.html")
-})
 
 
 app.post("/login", async function (req, res) {
@@ -166,21 +155,31 @@ app.post("/login", async function (req, res) {
         }
         else if (actualId === 4)
             res.render("human", { username: actualName, userId: actualId });
-        else if (actualId === 1){
-            Permission
-            res.render("Count", { username: actualName, userId: actualId });
+        
+            else if (actualId === 1){
+            Permission.find({},(err,prems)=>
+            {
+                if(err) {console.log("error");}
+                 res.render("Count", { username: actualName, all: prems });
+                
+            });
+            
         }
         else if (actualId === 2)
-            res.render("manager", { username: actualName, userId: actualId });
+        {Manager.find({},(err,mrems)=>
+        {
+            if(err) {console.log("error");}
+             res.render("manager", { username: actualName, all: mrems });
+            
+        });
         
         
         }
     else {
         res.send("wrongPassword");
+        }
     }
-
 });
-
 app.post("/reqg", function (req, res) {
     res.sendFile(__dirname + "/public/gen.html");
 });
@@ -194,17 +193,17 @@ app.post("/bookG", async function (req, res) {
     const datad = await db.collection("users").findOne({ name: actualName });
     const addroom = new Room({
         tor: "General",
-        date: chosenDate,
+        rdate: chosenDate,
         bookedBy: datad,
         roomNo: (100 + ++T)
     });
     addroom.save();
-
+//   res.redirect("");
 });
 app.post("/bookS", async function (req, res) {
     const datad = await db.collection("users").findOne({ name: actualName });
     const managerReq = new Manager({
-        date:req.body.date,
+        mdate:req.body.date,
         adult: req.body.adultm,
         children: req.body.childm,
         message: req.body.mssg,
@@ -214,10 +213,12 @@ app.post("/bookS", async function (req, res) {
 });
 
 app.post("/humang", function (req, res) {
-    if ((T + 100) < gen)
-        res.sendFile(__dirname + "/public/gen.html");
-    else
-        res.sendFile(_dirname + "/public/reqDrac.html");
+    // if ((T + 100) < gen){
+    //     res.sendFile(__dirname + "/public/gen.html");
+        
+    // }
+    // else
+        res.sendFile(__dirname + "/public/reqDrac.html");
 });
 
 app.post("/HbookS", async function (req, res) {
@@ -239,16 +240,16 @@ app.post("/HbookS", async function (req, res) {
 
     const datad = await db.collection("users").findOne({ name: actualName });
     const specialReq = new Permission({
-        date:req.body.date,
+        pdate:req.body.pdate,
         rwMavis: req.body.relation,
         rwMonster: req.body.relwm,
-        finalReq: req.body.finalRequest,
+        finalReq: req.body.msg,
         rating: req.body.imp,
         requestedBy:datad
     });
     specialReq.save();
-})
+});
 
-app.listen(3000, function () {
-    console.log("listening at 3000");
+app.listen(4000,function(){
+console.log("listening at 3000");
 });
