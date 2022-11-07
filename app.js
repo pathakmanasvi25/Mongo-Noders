@@ -6,6 +6,7 @@ const { application } = require("express");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
+app.set('views' , __dirname+'/views');
 app.use(express.static("public"));
 mongoose.connect("mongodb://127.0.0.1/signupDB", { useNewUrlParser: true });
 var db = mongoose.connection;
