@@ -5,13 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-<<<<<<<< HEAD:views/Count.ejs
-    <title>Document</title>
-========
-=======
->>>>>>> 45617cd190b18d190e7841a2e939c4c2093e4a26
-    <title>Welcome</title>
+  
+    <title>Welcome Count</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
           body {
@@ -155,28 +150,18 @@
         }
     }
     </style>
-<<<<<<< HEAD
->>>>>>>> 45617cd190b18d190e7841a2e939c4c2093e4a26:views/index.ejs
+
 </head>
 
-<body>
-<<<<<<<< HEAD:views/Count.ejs
-    Welcome  
-========
-=======
-</head>
+
 
 <body>
->>>>>>> 45617cd190b18d190e7841a2e939c4c2093e4a26
+
 
 
     <h1>Welcome <%=username%></h1>
 
-<<<<<<< HEAD
-    <h1>There are some humans who require your approval to stay</h1>
-=======
-    <h1>There are some humans who require your approval to stay in special rooms</h1>
->>>>>>> 45617cd190b18d190e7841a2e939c4c2093e4a26
+
 
     <table class="content-table">
         <tr id="header">
@@ -185,10 +170,9 @@
           <th>Email</th>
           <th>Date arriving</th>
           <th>Type</th>
-<<<<<<< HEAD
-=======
+
           <th>Request Message</th>
->>>>>>> 45617cd190b18d190e7841a2e939c4c2093e4a26
+
         </tr>
         <%   for(var i=0;i<all.length;i++){ %>
         <tr>
@@ -197,17 +181,10 @@
           <td> <%= all[i].requestedBy.email %> </td>
           <td> <%= all[i].pdate %> </td>
           <td> <%= all[i].requestedBy.type %> </td>
-<<<<<<< HEAD
+          <td> <%= all[i].finalReq %> </td>
        </tr>
        <%   } %> 
     </table>
->>>>>>>> 45617cd190b18d190e7841a2e939c4c2093e4a26:views/index.ejs
-=======
-          <td> <%= all[i].finalReq %> </td>
-       </tr>
-       <%}%>
-    </table>
->>>>>>> 45617cd190b18d190e7841a2e939c4c2093e4a26
 </body>
 
 </html>

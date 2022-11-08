@@ -156,7 +156,7 @@ app.post("/login", async function (req, res) {
         else if (actualId === 4)
             res.render("human", { username: actualName, userId: actualId });
         
-            else if (actualId === 1){
+            else if (actualId === 1){  //dracula's page will open
             Permission.find({},(err,prems)=>
             {
                 if(err) {console.log("error");}
@@ -165,7 +165,7 @@ app.post("/login", async function (req, res) {
             });
             
         }
-        else if (actualId === 2)
+        else if (actualId === 2) //manager's page will open
         {Manager.find({},(err,mrems)=>
         {
             if(err) {console.log("error");}
@@ -179,13 +179,6 @@ app.post("/login", async function (req, res) {
         res.send("wrongPassword");
         }
     }
-});
-app.post("/reqg", function (req, res) {
-    res.sendFile(__dirname + "/public/gen.html");
-});
-
-app.post("/reqs", function (req, res) {
-    res.sendFile(__dirname + "/public/special.html");
 });
 
 app.post("/bookG", async function (req, res) {
@@ -240,7 +233,7 @@ app.post("/HbookS", async function (req, res) {
 
     const datad = await db.collection("users").findOne({ name: actualName });
     const specialReq = new Permission({
-        pdate:req.body.pdate,
+        pdate:req.body.date,
         rwMavis: req.body.relation,
         rwMonster: req.body.relwm,
         finalReq: req.body.msg,
@@ -250,6 +243,6 @@ app.post("/HbookS", async function (req, res) {
     specialReq.save();
 });
 
-app.listen(4000,function(){
+app.listen(3000,function(){
 console.log("listening at 3000");
 });
