@@ -22,6 +22,7 @@
 - General rooms can be booked by anyone; Special rooms
   will require approval by monster id and requires Manager’s
   approval for booking.
+ -Non Vip people can only book special rooms with permission from owner of hotel(if all general rooms are occupied)
  
 
 
@@ -31,6 +32,6 @@
 
 ### Tech Stack
 
-**User:** React, Java Script
+**User:** Java Script, HTML, CSS, jQuery
 
-**Server:** NodeJS, Express , MongoDB , MERN Stack
+**Server:** NodeJS, Express , MongoDB , Mongoose
