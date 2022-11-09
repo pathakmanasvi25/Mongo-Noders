@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-mongoose.connect("mongodb://127.0.0.1/test2DB", { useNewUrlParser: true });
+mongoose.connect("mongodb://127.0.0.1/test3DB", { useNewUrlParser: true });
 const db = mongoose.connection;
 
 var T = 1;
@@ -46,9 +46,6 @@ const userSchema = new mongoose.Schema({
 
 
 const User = mongoose.model("User", userSchema);
-// const total = 200,
-//   gen = 130,
-//   special = 70;
 
 const roomSchema = new mongoose.Schema({
   tor: {
@@ -140,7 +137,7 @@ app.post("/sign_up", async function (req, res) {
       type: req.body.type,
       cpassword: cpass,
     });
-    res.render("error", { message: "User Registered successfully", error: "" });
+    // res.render("error", { message: "User Registered successfully", error: "" });
     if (user.type === "monster") {
       user.id = 3;
     } else {
@@ -226,6 +223,7 @@ app.post("/bookG", async function (req, res) {
       });
       await addroom.save();
     }
+    res.redirect("/yourb");
   }
   // res.render("monster", { username: actualName });
 });
@@ -240,8 +238,8 @@ app.post("/bookS", async function (req, res) {
     requestBy: datadm
   });
   console.log(managerReq.message);
-  managerReq.save();
-  res.render("monster", { username: actualName }); //redirection after requesting manager for special room
+  await managerReq.save();
+  res.redirect("/yourb"); //redirection after requesting manager for special room
 });
 
 
@@ -256,8 +254,8 @@ app.post("/HbookS", async function (req, res) {
     finalReq: req.body.msg,
     requestedBy: datad,
   });
-  specialReq.save();
-  res.write("<h1>request sent </h1>");
+  await specialReq.save();
+  res.redirect("/yourb");        //////////////////////////////////////////////////////
 });
 app.post("/list", function (req, res) {
   Room.find({}, (err, prems) => {
@@ -323,7 +321,7 @@ app.post("/reqaccM/:key", async function (req, res) {
 
 });
 app.get("/yourb", function (req, res) {
-  console.log("yuppp");
+  
 
   Room.find({}, (err, prems) => {
     if (err) {
