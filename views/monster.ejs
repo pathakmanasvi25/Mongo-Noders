@@ -9,10 +9,8 @@
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bitter&family=Macondo&family=Playfair+Display&family=Roboto+Flex:opsz@8..144&display=swap"
-        rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/mycss.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Bitter&family=Macondo&family=Playfair+Display&family=Roboto+Flex:opsz@8..144&display=swap" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/stylesmonsterhuman.css" />
 </head>
 
 <body>
@@ -28,9 +26,9 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/public/index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="C:\Users\patha\Desktop\Hotel Transylvania\public\index.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/public/contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -48,22 +46,11 @@
                                 General Rooms
                             </h2>
                             <p class="lead manu">Two double beds + One single bed.</p>
-                            <p class="mb-0 manu">The perefect get-away from the human world resides in these rooms under
-                                the
+                            <p class="mb-0 manu">The perefect get-away from the human world resides in these rooms under the
                                 roof of our Hotel Transylvania! </p>
-
-                            
-                                <form action="/bookG" method="post">
-
-                                    <p class="ppy"> Choose when you'll be arriving</p> 
-                                    <input type="date" name="date" min="2023-06-21" max="2023-06-27" class="date">
-
-                                  <p>  Please enter number of rooms you need:</p>
-                                    <input type="number" name="submitG" min="1" max="3" class="number">
-                                    <input type="submit" value="submit" name="give" class="submit">
-                                </form>
-                           
-                           
+                            <form action="/reqg" method="post">
+                                <button type="submit" class="manubtn">Book Here!</button><br><br>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -91,7 +78,7 @@
 
     <header class="py-5 bg-image-full" style="background-image: url('/img/room-2.jpg')">
         <div class="text-center my-5">
-          
+            <!-- <img class="img-fluid rounded-circle mb-4" src="/img/hotel.jpg" alt="..." /> -->
 
             <section class="py-5-6">
                 <div class="container my-5">
@@ -101,23 +88,11 @@
                                 Special Rooms
                             </h2>
                             <p class="lead manu">Three Double beds + Two Single Beds</p>
-                            <p class="mb-0 manu">Too large a family to accomodate? Well, worry not! We've got you
-                                covered with our
-                                deluxe special rooms reserved only for monsters. Request your stay in the special room from the manager! </p>
-                           
-
-                                <form action="/bookS" method="post">
-                                    <p class="pp">Choose your arrival date</p>
-                                    <input type="date" name="date" min="2023-06-21" max="2023-06-27">
-                                    <p> Number of adult monsters:</p>
-                                    <input type="number" name="adultm" id="">
-                                    <p> Number of underage monsters:</p>
-                                    <input type="number" name="childm" id="">
-                                    <p>Any messages to the manager:</p>
-                                    <input type="text" name="mssg" id="">
-                                    <input type="submit" value="Send request!" name="submitS" id="sproom" />
-                                </form>
-                           
+                            <p class="mb-0 manu">Too large a family to accomodate? Well, worry not! We've got you covered with our
+                                deluxe special rooms reserved only for monsters. Only a request away! </p>
+                            <form action="/reqs" method="post">
+                                <button type="submit" class="manubtn">Request!</button><br><br>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -128,9 +103,9 @@
     </header>
 
 
+  
 
-
-    <footer class="py-5-7 bg-dark">
+    <footer class="py-5-6 bg-dark">
         <div class="container">
             <p class="m-0 text-center text-white"> Hotel Transylavia</p>
         </div>
