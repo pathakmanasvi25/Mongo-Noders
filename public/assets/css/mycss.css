@@ -454,6 +454,18 @@ svg {
     padding-top: 4rem !important;
     padding-bottom: 4rem !important;
   }
+  .py-5-6{
+    padding-top: 1rem !important;
+    padding-bottom: 5rem !important;
+  }
+  .py-5-7{
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  .py-5-8{
+    padding-top: 0rem !important;
+    padding-bottom: 0rem !important;
+  }
   .bg-image-full {
     background-repeat: no-repeat;
     background-attachment: scroll;
@@ -534,18 +546,22 @@ svg {
         font-weight: bold;
         color: #fff;
         font-size: 21px;
-        margin-top: 4px;
+        margin-top: 4px
       }
       .pp{
         margin-top: 20px;
       }
       .ppy{
-        margin-top: 80px;
+        margin-top: 0px;
+      }
+      .ppy1{
+        margin-top: 9px;
       }
       input
       {
         width: 50%;
         margin-bottom: 20px;
+        border-radius: 10px;
       }
        input[type="text"]
       {
@@ -578,7 +594,9 @@ svg {
       }
       
     
-     
+     .manu{
+      margin-bottom: 24px;
+     }
      
       .txt2:hover
       {
