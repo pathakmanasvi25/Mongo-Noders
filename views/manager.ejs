@@ -156,23 +156,38 @@
 
     <h1>Welcome <%=username%></h1>
 
-    <h1>There are some Monsters who require your approval to stay</h1>
+    
+        <h1>There are some Monsters who require your approval to stay in special rooms
+            <form action="/list" method="post">
+                <input type="submit" value="Guest List" name="submit">
+            </form>
+        </h1>
+    
+    
 
     <table class="content-table">
         <tr id="header">
           <th>Name of Monster</th>
           <th>No of adult monster</th>
-          <th>no of Children</th>
-          <th>Date arriving</th>
+          <th>Date Arriving</th>
+          <th>Date Leaving</th>
           <th>Email</th>
+          <th>Relation With Mavis </th>
+          <th> Action</th>
         </tr>
         <%   for(var i=0;i<all.length;i++){ %>
         <tr>
-          <td> <%= all[i].requestBy.name %> </td>
+          <td> <%= all[i].requestBy.name %></td>
           <td> <%= all[i].adult %> </td>
-          <td> <%= all[i].children %> </td>
-          <td> <%= all[i].mdate %> </td>
-          <td> <%= all[i].requestBy.email %> </td>
+          <td> <%= all[i].mindate %> </td>
+          <td> <%= all[i].moutdate %> </td>
+          <td> <%= all[i].requestBy.email %></td>
+          <td> <%= all[i].message %> </td>
+          <td>       
+          <form action="/reqaccM/<%=all[i].message%>" method="post">
+             <input type="submit" value="Accept" name="submit">
+          </form>
+          </td>
         </tr>
        <%   } %> 
     </table>

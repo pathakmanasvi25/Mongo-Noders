@@ -1,254 +1,362 @@
-const express=require("express");
-const bodyParser=require("body-parser");
-const mongoose=require("mongoose");
-const ejs=require("ejs");
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const ejs = require("ejs");
 const { application } = require("express");
-const app=express();
-app.use(bodyParser.urlencoded({extended:true}));
-app.set('view engine','ejs');
+// const encrypt=require("mongoose-encryption");
+const md5 = require("md5");
+const { BulkOperationBase } = require("mongodb");
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
 app.use(express.static("public"));
-mongoose.connect("mongodb://127.0.0.1/signupDB",{useNewUrlParser:true});
-const db=mongoose.connection;
+mongoose.connect("mongodb://127.0.0.1/testDB", { useNewUrlParser: true });
+const db = mongoose.connection;
 
 var T = 1;
 var actualName = "";
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, "please fill"]
-    },
-    email: {
-        type: String,
-        required: [true, "please fill"]
-    },
-    phno: {
-        type: Number,
-        required: [true, "please fill"]
-    },
-    password: {
-        type: String,
-        required: [true, "please fill"]
-    },
-    type: {
-        type: String,
-        required: [true, "please fill"]
-    },
-    id: Number,
-    cpassword: {
-        type: String,
-        required: [true, "please fill"]
-    }
-
+  name: {
+    type: String,
+    required: [true, "please fill"],
+  },
+  email: {
+    type: String,
+    required: [true, "please fill"],
+  },
+  phno: {
+    type: Number,
+    required: [true, "please fill"],
+  },
+  password: {
+    type: String,
+    required: [true, "please fill"],
+  },
+  type: {
+    type: String,
+    required: [true, "please fill"],
+  },
+  id: Number,
+  cpassword: {
+    type: String,
+    required: [true, "please fill"],
+  },
 });
-const User = mongoose.model("User", userSchema);
-const total = 200, gen = 130, special = 70;
 
+
+
+const User = mongoose.model("User", userSchema);
+const total = 200,
+  gen = 130,
+  special = 70;
 
 const roomSchema = new mongoose.Schema({
-
-    tor: {
-        type: String, //typeofroom
-        required: [true]
-    },
-    rdate: {
-        type: Date,
-        required: [true]
-    },
-    bookedBy: userSchema,
-    roomNo: {
-        type: Number,
-        required: [true]
-    }
+  tor: {
+    type: String, //typeofroom
+    required: [true],
+  },
+  rindate: {
+    type: Date,
+    //required: [true]
+  },
+  routdate: {
+    type: Date,
+    //required: [true]
+  },
+  bookedBy: userSchema,
+  roomNo: {
+    type: Number,
+    required: [true],
+  },
 });
 
 const Room = mongoose.model("Room", roomSchema);
 
 const permissionSchema = new mongoose.Schema({
-       pdate: {type: Date,
-            //    required:[true]
-             },
-    rwMavis: {
-       type: String,
-        required: [true]
-    },
-    rwMonster: String ,
-    finalReq: {
-        type: String,
-        required: [true]
-    },
-    rating: {
-       type:  Number,
-        required: [true]
-    },
-    requestedBy: userSchema
-
+  pindate: {
+    type: Date,
+    //required:[true]
+  },
+  poutdate: {
+    type: Date,
+    //required:[true]
+  },
+  rwMavis: {
+    type: String,
+    required: true,
+  },
+  finalReq: {
+    type: String,
+    required: [true],
+  },
+  
+  requestedBy: userSchema,
 });
 
 const Permission = mongoose.model("Permission", permissionSchema);
 
 const managerSchema = new mongoose.Schema({
-    mdate: {type: Date,
-        required: [true]},
-    adult: {
-      type:  Number,
-        required:true
+  mindate: { 
+    type: Date, 
+    required: [true] 
     },
-    children: {
-       type:  Number,
-        required: [true]
-    },
-    message:  String,
-    requestBy: userSchema
+ moutdate: { 
+        type: Date, 
+        required: [true] 
+        },
+  adult: {
+    type: Number,
+    required: true,
+  },
+  message: {
+    type: String,
+    required: true,
+  },
+  requestBy: userSchema,
 });
 
 const Manager = mongoose.model("Manager", managerSchema);
 
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/public/index.html");
+});
+app.get("/list", function (req, res) {
+  Room.find({}, (err, prems) => {
+    if (err) {
+      console.log("error");
+    }
+    res.render("guest", { username: actualName, all: prems });
+  });
+});
+app.post("/sign_up", async function (req, res) {
+  const enteredMail = req.body.email;
+  const newUser = await db.collection("users").findOne({ email: enteredMail });
 
-app.get("/",function(req,res){
+  console.log(newUser);
+
+  const pass = md5(req.body.password); //hashing password
+  const cpass = md5(req.body.cpassword); //hashing confirm password
+
+  if (pass === cpass) {
     
-    res.sendFile(__dirname+"/public/index.html");
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      phno: req.body.phno,
+      password: pass,
+      type: req.body.type,
+      cpassword: cpass,
+    });
+    // res.render("error", { message: "User Registered successfully", error: "" });
+    if (user.type === "monster") {
+      user.id = 3;
+    } else {
+      user.id = 4;
+    }
+    await user.save(); //saving new user in user collection
+    res.redirect("/login");
+  } else {
+    res.render("error", {
+      message: "",
+      error: "Password and confirm password not matching ",
+    });
+  }
 });
-app.post("/sign_up",function(req,res){
-   const pass=req.body.password;
-  const cpass=req.body.cpassword;
-  if(pass===cpass){
-    const user=new User({
-         name:req.body.name,
-         email:req.body.email,
-         phno:req.body.phno,
-         password:pass,
-         type:req.body.type,
-         cpassword:cpass
-   });
-   user.save();
-   if(user.type==="monster"){
-    user.id=3
-   }else{
-    user.id=4;
-   }
-      res.redirect("/");
- }
-
-     else{
-           res.write("<h1>password did not match</h1>");
-     }
- });
-app.post("/s",function(req,res){
-    res.sendFile(__dirname+"/public/login.html")
+app.get("/login", function (req, res) {
+  res.sendFile(__dirname + "/public/login.html");
 });
-
-
+app.post("/s", function (req, res) {
+  res.sendFile(__dirname + "/public/login.html");
+});
 
 app.post("/login", async function (req, res) {
-    const pass = req.body.lpassword;
-    const mail = req.body.lemail;
-    const data = await db.collection("users").findOne({ email: mail });
+  const pass = md5(req.body.lpassword); //hashing the entered password
+  const mail = req.body.lemail;
+  const data = await db.collection("users").findOne({ email: mail });
+  if (data) {
     const actualPassword = data.password;
     actualName = data.name;
     const actualId = data.id;
     if (pass === actualPassword) {
+      //comparing both hashed password
 
-        if (actualId === 3) {
+      if (actualId === 3) {
+        res.render("monster", { username: actualName, userId: actualId });
+      } else if (actualId === 4)
+        res.render("human", { username: actualName, userId: actualId });
 
-            res.render("monster", { username: actualName, userId: actualId });
-        }
-        else if (actualId === 4)
-            res.render("human", { username: actualName, userId: actualId });
-        
-            else if (actualId === 1){
-            Permission.find({},(err,prems)=>
-            {
-                if(err) {console.log("error");}
-                 res.render("Count", { username: actualName, all: prems });
-                
-            });
-            
-        }
-        else if (actualId === 2)
-        {Manager.find({},(err,mrems)=>
-        {
-            if(err) {console.log("error");}
-             res.render("manager", { username: actualName, all: mrems });
-            
+      else if (actualId === 1) { //Count Dracula's ID
+        Permission.find({}, (err, prems) => { 
+          if (err) {
+            console.log("error");
+          }
+          res.render("Count", { username: actualName, all: prems });
         });
-        
-        
-        }
-    else {
-        res.send("wrongPassword");
-        }
+
+      } else if (actualId === 2) {  //manager's ID
+        Manager.find({}, (err, mrems) => {
+          if (err) {
+            console.log("error");
+          }
+          res.render("manager", { username: actualName, all: mrems });
+        });
+      }
     }
+  }
 });
 app.post("/reqg", function (req, res) {
-    res.sendFile(__dirname + "/public/gen.html");
+  res.sendFile(__dirname + "/public/genm.html");
 });
 
 app.post("/reqs", function (req, res) {
-    res.sendFile(__dirname + "/public/special.html");
+  res.sendFile(__dirname + "/public/special.html");
 });
 
 app.post("/bookG", async function (req, res) {
-    const chosenDate = req.body.date;
-    const datad = await db.collection("users").findOne({ name: actualName });
-    const addroom = new Room({
-        tor: "General",
-        rdate: chosenDate,
-        bookedBy: datad,
-        roomNo: (100 + ++T)
-    });
-    addroom.save();
-//   res.redirect("");
+  const chosenDate = req.body.date;
+  const datad = await db.collection("users").findOne({ name: actualName });
+  const addroom = new Room({
+    tor: "General",
+    rdate: chosenDate,
+    bookedBy: datad,
+    roomNo: 100 + ++T,
+  });
+  addroom.save();
+  res.render("human", { username: actualName }); //redirection after booking general room for humans
+});
+app.post("/bookGM", async function (req, res) {
+  const chosenDate = req.body.date;
+  const datad = await db.collection("users").findOne({ name: actualName });
+  const addroom = new Room({
+    tor: "General",
+    rdate: chosenDate,
+    bookedBy: datad,
+    roomNo: 100 + ++T,
+  });
+  addroom.save();
+  res.render("monster", { username: actualName }); //redirection after booking general room for humans
 });
 app.post("/bookS", async function (req, res) {
-    const datad = await db.collection("users").findOne({ name: actualName });
-    const managerReq = new Manager({
-        mdate:req.body.date,
-        adult: req.body.adultm,
-        children: req.body.childm,
-        message: req.body.mssg,
-        requestBy:datad
-    });
-    managerReq.save();
+  const datadm = await db.collection("users").findOne({ name: actualName });
+  const managerReq = new Manager({
+    mindate: req.body.indate,
+    moutdate: req.body.outdate,
+    adult: req.body.adultm,
+    message: req.body.mssg,
+    requestBy: datadm,
+  });
+  console.log(managerReq.message);
+  managerReq.save();
+  res.render("monster", { username: actualName }); //redirection after requesting manager for special room
 });
 
 app.post("/humang", function (req, res) {
-    // if ((T + 100) < gen){
-    //     res.sendFile(__dirname + "/public/gen.html");
-        
-    // }
-    // else
-        res.sendFile(__dirname + "/public/reqDrac.html");
+  // if ((T + 100) < gen){
+  // res.sendFile(__dirname + "/public/gen.html");
+
+  // }
+  // else
+  res.sendFile(__dirname + "/public/reqDrac.html");
 });
 
 app.post("/HbookS", async function (req, res) {
+//   function myFunction() {
+//     // Get the checkbox
+//     var checkBox = document.getElementById("myCheck");
+//     // Get the output text
+//     var text = document.getElementById("text");
 
+//     // If the checkbox is checked, display the output text
+//     if (checkBox.checked == true) {
+//       text.style.display = "block";
+//     } else {
+//       text.style.display = "none";
+//     }
+//   }
 
-    function myFunction() {
-        // Get the checkbox
-        var checkBox = document.getElementById("myCheck");
-        // Get the output text
-        var text = document.getElementById("text");
-
-        // If the checkbox is checked, display the output text
-        if (checkBox.checked == true) {
-            text.style.display = "block";
-        } else {
-            text.style.display = "none";
-        }
+  const datad = await db.collection("users").findOne({ name: actualName });
+  const specialReq = new Permission({
+    pindate: req.body.indate,
+    poutdate: req.body.outdate,
+    rwMavis: req.body.relation,
+    finalReq: req.body.msg,
+    requestedBy: datad,
+  });
+  specialReq.save();
+  res.write("<h1>request sent </h1>");
+});
+app.post("/list", function (req, res) {
+  Room.find({}, (err, prems) => {
+    if (err) {
+      console.log("error");
     }
+    res.render("guest", { username: actualName, all: prems });
+  });
+});
+app.post("/reqaccD/:tail", async function (req, res) {
+  console.log("req accepted by dracula ");
+  console.log(req.params.tail);
+  const rel = req.params.tail;
+  const perr = await db.collection("permissions").findOne({ rwMavis:rel });
+  console.log(perr);
+  
 
-    const datad = await db.collection("users").findOne({ name: actualName });
-    const specialReq = new Permission({
-        pdate:req.body.pdate,
-        rwMavis: req.body.relation,
-        rwMonster: req.body.relwm,
-        finalReq: req.body.msg,
-        rating: req.body.imp,
-        requestedBy:datad
+   const addroomS = new Room({
+        tor: "Special",
+        rindate: perr.pindate,
+        routdate: perr.poutdate,
+        bookedBy: perr.requestedBy,
+        roomNo: (100 + ++T)
     });
-    specialReq.save();
+   addroomS.save();
+   db.collection("permissions").deleteOne({rwMavis:rel});
+   Room.find({}, (err, premsm) => { 
+    if (err) {
+      console.log("error");
+    }
+    res.render("Count", { username: actualName, all: premsm });
+  });
+  
 });
 
-app.listen(4000,function(){
-console.log("listening at 3000");
+
+app.post("/reqaccM/:key", async function (req, res) {
+console.log("request accepted by manager");
+console.log(req.params.key);
+const rel = req.params.key;
+const manr = await db.collection("managers").findOne({ message:rel });
+console.log(manr);
+
+
+ const addroomSM = new Room({
+      tor: "Special",
+      rindate: manr.indate,
+      routdate: manr.outdate,
+      bookedBy: manr.requestedBy,
+      roomNo: (100 + ++T)
+  });
+ addroomSM.save();
+ db.collection("managers").deleteOne({message:rel});
+ Permission.find({}, (err, premsm) => { 
+  if (err) {
+    console.log("error");
+  }
+  res.render("manager", { username: actualName, all: premsm });
+});
+
+
+
+});
+app.get("/yourb", function (req, res) {
+  console.log("yuppp");
+
+  Room.find({}, (err, prems) => {
+    if (err) {
+      console.log("error");
+    }
+    res.render("book", { username: actualName, all: prems });
+  });
+});
+app.listen(4000, function () {
+  console.log("listening at 4000");
 });

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
     <style>
           body {
-      background-image: url("public/assets/img/new.jpg");
-      background-color: rgb(220,202,177);
+      /* background-image: url("public/assets/img/new.jpg");
+      background-color: rgb(220,202,177); */
+      background: linear-gradient(68.3deg, rgb(23, 41, 77) 6.3%, rgb(243, 113, 154) 90.9%);
         padding: 0px;
         margin: 0;
         font-family:'Times New Roman', Times, serif;
@@ -70,6 +72,7 @@
     }
     .ahome{
         color: rgb(54,44,44);
+        
     }
     .home:hover{
         background-color: rgb(135, 101, 87);
@@ -151,12 +154,17 @@
     </style>
 </head>
 
+
 <body>
 
 
     <h1>Welcome <%=username%></h1>
 
-    <h1>There are some humans who require your approval to stay in special rooms</h1>
+    <h1>There are some humans who require your approval to stay in special rooms
+        <form action="/list" method="post">
+            <input type="submit" value="Guest List" name="submit">
+        </form>
+    </h1>
 
     <table class="content-table">
         <tr id="header">
@@ -164,17 +172,28 @@
           <th>Relation with Mavis</th>
           <th>Email</th>
           <th>Date arriving</th>
+          <th>Date Leaving</th>
           <th>Type</th>
           <th>Request Message</th>
+          <th>Action</th>
         </tr>
-        <%   for(var i=0;i<all.length;i++){ %>
-        <tr>
+        <%   for(var i=0;i<all.length;i++){  %>
+        
+            <tr>
           <td> <%= all[i].requestedBy.name %> </td>
           <td> <%= all[i].rwMavis %> </td>
           <td> <%= all[i].requestedBy.email %> </td>
-          <td> <%= all[i].pdate %> </td>
+          <td> <%= all[i].pindate %> </td>
+          <td> <%= all[i].poutdate %> </td>
           <td> <%= all[i].requestedBy.type %> </td>
           <td> <%= all[i].finalReq %> </td>
+          <td>
+           
+             <form action="/reqaccD/<%=all[i].rwMavis%>" method="post"> 
+               <!-- <input type="text" value=<%= all[i].requestedBy.email%> name="mail" method="post" id="mail"> -->
+                <input type="submit" value="Accept" name="submit" >
+            </form> 
+          </td>
        </tr>
        <%}%>
     </table>
