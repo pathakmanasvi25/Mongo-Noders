@@ -10,9 +10,7 @@
     
     <style>
           body {
-      /* background-image: url("public/assets/img/new.jpg");
-      background-color: rgb(220,202,177); */
-      background: linear-gradient(68.3deg, rgb(23, 41, 77) 6.3%, rgb(243, 113, 154) 90.9%);
+        background: linear-gradient(90deg, #9c8080 38%, #653d3d 100%,#000000 0%);
         padding: 0px;
         margin: 0;
         font-family:'Times New Roman', Times, serif;
@@ -21,13 +19,13 @@
     table {
         position: absolute;
         left: 50%;
-        top: 646px;
+        top: 50%;
         transform: translate(-50%, -50%);
         border-collapse: collapse;
-        width: 800px;
+        width: 1260px;
         border: 1px solid #bdc3c7;
         box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
-        background-color: rgba(67, 52, 37, 0.9);
+        background-color: #DFBB9D;
        
     }
     a{
@@ -50,8 +48,9 @@
     td {
         padding: 12px;
         text-align: left;
-        border-bottom: 1px solid #fff;
-        color: #fff;
+        border-bottom: 1px solid rgb(255, 255, 255);
+        color: #0b0a0a;
+        font-size: 18px;
     } 
     
      #header {
@@ -106,7 +105,7 @@
         font-weight: 600;
         text-align: center;
         background-color: rgb(54,44,44);
-        color: rgb(220,202,177);
+        color: #fafcfc;
         padding: 10px 0px;
         margin-top: 0;
         font-size: 35px;
@@ -151,6 +150,40 @@
             width: 90%;
         }
     }
+    .manubtn{
+  font-weight: bold;
+  font-size: 20px;
+  background-color:#ffffff;
+  opacity: 0.75;
+  color:rgb(110, 62, 46) ;
+  margin: 20px;
+  border-radius: 12px;
+  padding:5px;
+  width: 124px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.manubtnA{
+  font-weight: bold;
+  font-size: 10px;
+  background-color:#ffffff;
+  opacity: 0.75;
+  color: rgb(110, 62, 46);
+  margin: 20px;
+  border-radius: 12px;
+  padding:5px;
+  width: 50px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.manubtn:hover{
+  background-color:#adb5bd;
+  opacity: 1;
+  color:#2c3034;
+}
+.manubtnA:hover{
+  background-color:#adb5bd;
+  opacity: 1;
+  color:#2c3034;
+}
     </style>
 </head>
 
@@ -158,11 +191,11 @@
 <body>
 
 
-    <h1>Welcome <%=username%></h1>
+    <h1>Welcome Mr. <%=username%></h1>
 
-    <h1>There are some humans who require your approval to stay in special rooms
+    <h1>These are some humans who require your approval to stay in special rooms
         <form action="/list" method="post">
-            <input type="submit" value="Guest List" name="submit">
+            <input type="submit" value="Guest List" name="submit" class="manubtn">
         </form>
     </h1>
 
@@ -180,9 +213,9 @@
         <%   for(var i=0;i<all.length;i++){  %>
         
             <tr>
-          <td> Name </td>
+          <td> <%= all[i].requestedBy.name %> </td>
           <td> <%= all[i].rwMavis %> </td>
-          <td> Gmail </td>
+          <td> <%= all[i].requestedBy.email %> </td>
           <td> <%= all[i].pindate %> </td>
           <td> <%= all[i].poutdate %> </td>
           <td> <%= all[i].requestedBy.type %> </td>
@@ -190,8 +223,8 @@
           <td>
            
              <form action="/reqaccD/<%=all[i].rwMavis%>" method="post"> 
-               <!-- <input type="text" value=<%= all[i].requestedBy.email%> name="mail" method="post" id="mail"> -->
-                <input type="submit" value="Accept" name="submit" >
+            
+                <input type="submit" value="Accept" name="submit" class="manubtnA">
             </form> 
           </td>
        </tr>

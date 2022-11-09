@@ -240,10 +240,10 @@ app.post("/bookS", async function (req, res) {
 
 app.post("/humang", function (req, res) {
   // if ((T + 100) < 103)
-    res.sendFile(__dirname + "/public/gen.html");
+    // res.sendFile(__dirname + "/public/gen.html");
 
   // else
-  // res.sendFile(__dirname + "/public/reqDrac.html");
+  res.sendFile(__dirname + "/public/reqDrac.html");
 });
 
 app.post("/HbookS", async function (req, res) {
