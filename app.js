@@ -140,7 +140,7 @@ app.post("/sign_up", async function (req, res) {
       type: req.body.type,
       cpassword: cpass,
     });
-    // res.render("error", { message: "User Registered successfully", error: "" });
+    res.render("error", { message: "User Registered successfully", error: "" });
     if (user.type === "monster") {
       user.id = 3;
     } else {
@@ -161,7 +161,9 @@ app.get("/login", function (req, res) {
 app.post("/s", function (req, res) {
   res.sendFile(__dirname + "/public/login.html");
 });
-
+app.post("/back",function(req,res){
+  res.redirect("/");
+});
 app.post("/login", async function (req, res) {
   const pass = md5(req.body.lpassword); //hashing the entered password
   const mail = req.body.lemail;

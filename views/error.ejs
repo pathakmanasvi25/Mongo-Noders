@@ -82,12 +82,18 @@ body::before{
         <% if (message != "") { %>
         <div class="alert-success">
             <%= message %>
+            <form action="/back" method="post">
+               <input type="submit" name="submit" value="Okay">
+            </form>
         </div>
         <% } %>
         
         <% if (error != "") { %>
         <div class="alert-danger">
             <%= error %>
+            <form action="/back" method="post">
+                <input type="submit" name="submit" value="Try Again">
+             </form>
         </div>
         <% } %>
     </div>
