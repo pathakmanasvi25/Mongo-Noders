@@ -89,21 +89,21 @@ const permissionSchema = new mongoose.Schema({
     type: String,
     required: [true]
   },
-  
+
   requestedBy: userSchema
 });
 
 const Permission = mongoose.model("Permission", permissionSchema);
 
 const managerSchema = new mongoose.Schema({
-  mindate: { 
-    type: Date, 
-    required: [true] 
-    },
- moutdate: { 
-        type: Date, 
-        required: [true] 
-        },
+  mindate: {
+    type: Date,
+    required: [true]
+  },
+  moutdate: {
+    type: Date,
+    required: [true]
+  },
   adult: {
     type: Number,
     required: true
@@ -131,7 +131,7 @@ app.post("/sign_up", async function (req, res) {
   const cpass = md5(req.body.cpassword); //hashing confirm password
 
   if (pass === cpass) {
-    
+
     const user = new User({
       name: req.body.name,
       email: req.body.email,
@@ -174,12 +174,12 @@ app.post("/login", async function (req, res) {
       //comparing both hashed password
 
       if (actualId === 3) {
-        res.render("monster", { username: actualName});
+        res.render("monster", { username: actualName });
       } else if (actualId === 4)
-        res.render("human", { username: actualName});
+        res.render("human", { username: actualName });
 
       else if (actualId === 1) { //Count Dracula's ID
-        Permission.find({}, (err, prems) => { 
+        Permission.find({}, (err, prems) => {
           if (err) {
             console.log("error");
           }
@@ -197,30 +197,34 @@ app.post("/login", async function (req, res) {
     }
   }
 });
-app.post("/reqg", function (req, res) {
-  res.sendFile(__dirname + "/public/genm.html");
-});
+// app.post("/reqg", function (req, res) {
+//   res.sendFile(__dirname + "/public/genm.html");
+// });
 
-app.post("/reqs", function (req, res) {
-  res.sendFile(__dirname + "/public/special.html");
-});
+// app.post("/reqs", function (req, res) {
+//   res.sendFile(__dirname + "/public/special.html");
+// });
 
 app.post("/bookG", async function (req, res) {
   const choseninDate = req.body.indate;
   const chosenoutDate = req.body.outdate;
-  const noOfRooms=req.body.submitG;
+  const noOfRooms = req.body.submitG;
   const datad = await db.collection("users").findOne({ name: actualName });
   console.log(datad);
-  for(var i=0;i<noOfRooms;i++)
-{  const addroom = new Room({
-    tor: "General",
-    rindate: choseninDate,
-    routdate: chosenoutDate,
-    bookedBy: datad,
-    roomNo: 100 + (++T)
-  });
-  await addroom.save();
- } 
+  if (actualId === 4 && ((T + 100) > 104))  //condition if user is a hauman and needs a special room in case all general rooms are occupied
+    res.sendFile(__dirname + "/public/reqDrac.html");
+  else {
+    for (var i = 0; i < noOfRooms; i++) {
+      const addroom = new Room({
+        tor: "General",
+        rindate: choseninDate,
+        routdate: chosenoutDate,
+        bookedBy: datad,
+        roomNo: 100 + (++T)
+      });
+      await addroom.save();
+    }
+  }
   // res.render("monster", { username: actualName });
 });
 
@@ -238,13 +242,6 @@ app.post("/bookS", async function (req, res) {
   res.render("monster", { username: actualName }); //redirection after requesting manager for special room
 });
 
-app.post("/humang", function (req, res) {
-  // if ((T + 100) < 103)
-    res.sendFile(__dirname + "/public/gen.html");
-
-  // else
-  // res.sendFile(__dirname + "/public/reqDrac.html");
-});
 
 app.post("/HbookS", async function (req, res) {
 
@@ -272,53 +269,53 @@ app.post("/reqaccD/:tail", async function (req, res) {
   console.log("req accepted by dracula ");
   console.log(req.params.tail);
   const rel = req.params.tail;
-  const perr = await db.collection("permissions").findOne({ rwMavis:rel });
+  const perr = await db.collection("permissions").findOne({ rwMavis: rel });
   console.log(perr);
-  
 
-   const addroomS = new Room({
-        tor: "Special",
-        rindate: perr.pindate,
-        routdate: perr.poutdate,
-        bookedBy: perr.requestedBy,
-        roomNo: (100 + ++T)
-    });
-   await addroomS.save();
+
+  const addroomS = new Room({
+    tor: "Special",
+    rindate: perr.pindate,
+    routdate: perr.poutdate,
+    bookedBy: perr.requestedBy,
+    roomNo: (100 + ++T)
+  });
+  await addroomS.save();
   //  console.log(addroomS);
-   db.collection("permissions").deleteOne({rwMavis:rel});
-   Permission.find({}, (err, premsm) => { 
+  db.collection("permissions").deleteOne({ rwMavis: rel });
+  Permission.find({}, (err, premsm) => {
     if (err) {
       console.log("error");
     }
     res.render("count", { username: actualName, all: premsm });
   });
-  
+
 });
 
 
 app.post("/reqaccM/:key", async function (req, res) {
-console.log("request accepted by manager");
-console.log(req.params.key);
-const rel = req.params.key;
-const manr = await db.collection("managers").findOne({ message:rel });
-console.log(manr);
+  console.log("request accepted by manager");
+  console.log(req.params.key);
+  const rel = req.params.key;
+  const manr = await db.collection("managers").findOne({ message: rel });
+  console.log(manr);
 
 
- const addroomSM = new Room({
-      tor: "Special",
-      rindate: manr.mindate,
-      routdate: manr.moutdate,
-      bookedBy: manr.requestBy,
-      roomNo: (100 + ++T)
+  const addroomSM = new Room({
+    tor: "Special",
+    rindate: manr.mindate,
+    routdate: manr.moutdate,
+    bookedBy: manr.requestBy,
+    roomNo: (100 + ++T)
   });
- await addroomSM.save();
- db.collection("managers").deleteOne({message:rel});
- Manager.find({}, (err, premsm) => { 
-  if (err) {
-    console.log("error");
-  }
-  res.render("manager", { username: actualName, all: premsm });
-});
+  await addroomSM.save();
+  db.collection("managers").deleteOne({ message: rel });
+  Manager.find({}, (err, premsm) => {
+    if (err) {
+      console.log("error");
+    }
+    res.render("manager", { username: actualName, all: premsm });
+  });
 
 
 
@@ -345,6 +342,6 @@ app.get("/list", function (req, res) {
 });
 
 
-app.listen(4000, function () {
-  console.log("listening at 4000");
+app.listen(3000, function () {
+  console.log("listening at 3000");
 });
