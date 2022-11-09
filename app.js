@@ -208,9 +208,11 @@ app.post("/reqs", function (req, res) {
 app.post("/bookG", async function (req, res) {
   const choseninDate = req.body.indate;
   const chosenoutDate = req.body.outdate;
+  const noOfRooms=req.body.submitG;
   const datad = await db.collection("users").findOne({ name: actualName });
   console.log(datad);
-  const addroom = new Room({
+  for(var i=0;i<noOfRooms;i++)
+{  const addroom = new Room({
     tor: "General",
     rindate: choseninDate,
     routdate: chosenoutDate,
@@ -218,25 +220,10 @@ app.post("/bookG", async function (req, res) {
     roomNo: 100 + (++T)
   });
   await addroom.save();
-  // if(actualId===4)
-  // res.render("human", { username: actualName }); //redirection after booking general room for humans
-  // else if(actualId===3)
+ } 
   // res.render("monster", { username: actualName });
 });
-// app.post("/bookGM", async function (req, res) {
-//   const choseninDate = req.body.indate;
-//   const chosenoutDate = req.body.outdate;
-//   const datad = await db.collection("users").findOne({ name: actualName });
-//   const addroom = new Room({
-//     tor: "General",
-//     rindate: choseninDate,
-//     routdate: chosenoutDate,
-//     bookedBy: datad,
-//     roomNo: 100 + ++T,
-//   });
-//   addroom.save();
-//   res.render("monster", { username: actualName }); //redirection after booking general room for humans
-// });
+
 app.post("/bookS", async function (req, res) {
   const datadm = await db.collection("users").findOne({ name: actualName });
   const managerReq = new Manager({
@@ -253,26 +240,14 @@ app.post("/bookS", async function (req, res) {
 
 app.post("/humang", function (req, res) {
   // if ((T + 100) < 103)
-    // res.sendFile(__dirname + "/public/gen.html");
+    res.sendFile(__dirname + "/public/gen.html");
 
   // else
-  res.sendFile(__dirname + "/public/reqDrac.html");
+  // res.sendFile(__dirname + "/public/reqDrac.html");
 });
 
 app.post("/HbookS", async function (req, res) {
-//   function myFunction() {
-//     // Get the checkbox
-//     var checkBox = document.getElementById("myCheck");
-//     // Get the output text
-//     var text = document.getElementById("text");
 
-//     // If the checkbox is checked, display the output text
-//     if (checkBox.checked == true) {
-//       text.style.display = "block";
-//     } else {
-//       text.style.display = "none";
-//     }
-//   }
 
   const datad = await db.collection("users").findOne({ name: actualName });
   const specialReq = new Permission({
