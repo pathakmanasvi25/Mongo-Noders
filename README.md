@@ -35,3 +35,15 @@
 **User:** Java Script, HTML, CSS, jQuery
 
 **Server:** NodeJS, Express , MongoDB , Mongoose
+Feedback
+Feel free to file an issue if you come across any bugs
+
+Made at:![Screenshot 2022-11-10 073744](https://user-images.githubusercontent.com/97390441/200982991-4857a05f-ec4b-418e-b057-bed36a724a2d.jpg)
+
+
+MNNIT
+
+  ![Motilal_Nehru_National_Institute_of_Technology_Allahabad_logo](https://user-images.githubusercontent.com/97390441/200983096-0d8a50df-4e6f-4d7f-a785-a33be93001f0.png)
+
+
+
