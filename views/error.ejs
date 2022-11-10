@@ -5,13 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error-404</title>
-    <link rel="stylesheet" href="/static/css/error.css">
+    <!-- <link rel="stylesheet" href="/static/css/error.css"> -->
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&display=swap');
 * {
     margin: 0;
     padding: 0;
     font-family: 'Baloo 2', cursive;
+}
+body {
+      background: linear-gradient(90deg, #9c8080 38%, #653d3d 100%,#000000 0%);
+      padding: 0px;
+      margin: 0;
+      font-family:'Times New Roman', Times, serif;
 }
 .alert
 {
@@ -24,10 +30,10 @@
 .alert-success
 {
     width: 400px;
-    height: 85px;
+    height: 106px;
     border: 2px solid green;
     background-color: lightgreen;
-    margin-bottom: 5px;
+    margin-top: 300px;
     text-align: center;
     color: black;
     text-shadow: none;
@@ -40,10 +46,10 @@
 .alert-danger
 {
     width: 400px;
-    height: 85px;
-    border: 2px solid red;
+    height: 106px;
+    border: 10px solid red;
     background-color: lightcoral;
-    margin-bottom: 5px;
+    margin-top: 300px;
     text-align: center;
     color: black;
     text-shadow: none;
@@ -52,9 +58,9 @@
     justify-content: center;
     align-items: center;
 }
-body::before{
+/* body::before{
     content: " ";
-    background:url('/static/img/404-error.jpg')no-repeat center/cover;
+    background:url('public/img/404-error.jpg')no-repeat center/cover;
     z-index: -1;
     position: absolute;
     width: 100%;
@@ -62,7 +68,7 @@ body::before{
     left: 0;
     top: 0;
     opacity: 1;
-  }
+  } */
   @media screen and (max-width:496px)
   {
     .alert-success
@@ -74,6 +80,30 @@ body::before{
         width: 250px;
     }
   }
+  .manubtn{
+font-weight: bold;
+font-size: 20px;
+background-color:#ffffff;
+opacity: 0.75;
+color:rgb(110, 62, 46) ;
+margin: 20px;
+border-radius: 12px;
+padding:5px;
+width: 124px;
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.manubtnA{
+font-weight: bold;
+font-size: 10px;
+background-color:#ffffff;
+opacity: 0.75;
+color: rgb(110, 62, 46);
+margin: 20px;
+border-radius: 12px;
+padding:5px;
+width: 50px;
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
 </style>
 </head>
 
@@ -81,8 +111,8 @@ body::before{
     <div class="alert">
         <% if (message != "") { %>
         <div class="alert-success">
-            <%= message %>
-            <form action="/back" method="post">
+            <%= message %><br>
+            <form action="/backa" method="post" class="manubtn">
                <input type="submit" name="submit" value="Okay">
             </form>
         </div>
@@ -90,8 +120,8 @@ body::before{
         
         <% if (error != "") { %>
         <div class="alert-danger">
-            <%= error %>
-            <form action="/back" method="post">
+            <%= error %><br>
+            <form action="/backd" method="post" class="manubtn">
                 <input type="submit" name="submit" value="Try Again">
              </form>
         </div>
