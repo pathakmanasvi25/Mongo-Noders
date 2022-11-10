@@ -191,12 +191,9 @@
 <body>
 
 
-    <h1>Welcome Mr. <%=username%></h1>
+    <h1>Welcome <%=username%></h1>
 
     <h1>Your Bookings are
-        <!-- <form action="/list" method="post">
-            <input type="submit" value="Guest List" name="submit" class="manubtn">
-        </form> -->
     </h1>
 
     <table class="content-table">
@@ -215,13 +212,6 @@
           <td> <%= all[i].routdate %> </td>
           <td> <%= all[i].tor %> </td>
           <td> <%= all[i].roomNo %> </td>
-          <!-- <td>
-           
-             <form action="/reqaccD/<%=all[i].rwMavis%>" method="post"> 
-            
-                <input type="submit" value="Accept" name="submit" class="manubtnA">
-            </form> 
-          </td> -->
        </tr>
        <%}%>
        <%}%>

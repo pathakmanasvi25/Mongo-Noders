@@ -10,11 +10,12 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-mongoose.connect("mongodb://127.0.0.1/test3DB", { useNewUrlParser: true });
+mongoose.connect("mongodb://127.0.0.1/hotelDB", { useNewUrlParser: true });
 const db = mongoose.connection;
 
 var T = 1;
 var actualName = "";
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -51,17 +52,15 @@ const roomSchema = new mongoose.Schema({
     required: [true],
   },
   rindate: {
-    type: Date,
-    //required: [true]
+    type: Date
   },
   routdate: {
-    type: Date,
-    //required: [true]
+    type: Date
   },
   bookedBy: userSchema,
   roomNo: {
     type: Number,
-    required: [true],
+    required: [true]
   },
 });
 
@@ -69,20 +68,18 @@ const Room = mongoose.model("Room", roomSchema);
 
 const permissionSchema = new mongoose.Schema({
   pindate: {
-    type: Date,
-    //required:[true]
+    type: Date
   },
   poutdate: {
-    type: Date,
-    //required:[true]
+    type: Date
   },
   rwMavis: {
     type: String,
-    required: true,
+    required: true
   },
   finalReq: {
     type: String,
-    required: [true],
+    required: [true]
   },
 
   requestedBy: userSchema,
@@ -92,22 +89,19 @@ const Permission = mongoose.model("Permission", permissionSchema);
 
 const managerSchema = new mongoose.Schema({
   mindate: {
-    type: Date,
-    required: [true],
+    type: Date
   },
   moutdate: {
-    type: Date,
-    required: [true],
+    type: Date
   },
   adult: {
     type: Number,
     required: true,
   },
   message: {
-    type: String,
-    required: true,
+    type: String
   },
-  requestBy: userSchema,
+  requestBy: userSchema
 });
 
 const Manager = mongoose.model("Manager", managerSchema);
@@ -171,6 +165,10 @@ app.get("/login", function (req, res) {
   res.sendFile(__dirname + "/public/login.html");
 });
 
+app.get("/fpass",function(req,res){
+  res.render("error",{message:"This feature will be incorporated Shortly",error:""});
+});
+
 app.post("/s", function (req, res) {
   res.sendFile(__dirname + "/public/login.html");
 });
@@ -221,20 +219,14 @@ app.post("/login", async function (req, res) {
     res.render("error", { message: "", error: "No user Found" });
   }
 });
-// app.post("/reqg", function (req, res) {
-//   res.sendFile(__dirname + "/public/genm.html");
-// });
 
-// app.post("/reqs", function (req, res) {
-//   res.sendFile(__dirname + "/public/special.html");
-// });
 
 app.post("/bookG", async function (req, res) {
   const choseninDate = req.body.indate;
   const chosenoutDate = req.body.outdate;
   const noOfRooms = req.body.submitG;
   const datad = await db.collection("users").findOne({ name: actualName });
-  if (actualId === 4 && T + 100 > 104)
+  if (actualId === 4 && T + 100 > 104) 
     //condition if user is a hauman and needs a special room in case all general rooms are occupied
     res.render("reqDrac", { username: actualName });
   else {
@@ -276,7 +268,7 @@ app.post("/HbookS", async function (req, res) {
     requestedBy: datad,
   });
   await specialReq.save();
-  res.redirect("/yourb"); //////////////////////////////////////////////////////
+  res.redirect("/yourb"); 
 });
 app.post("/list", function (req, res) {
   Room.find({}, (err, prems) => {
@@ -323,7 +315,7 @@ app.post("/reqaccM/:key", async function (req, res) {
     rindate: manr.mindate,
     routdate: manr.moutdate,
     bookedBy: manr.requestBy,
-    roomNo: 100 + ++T,
+    roomNo: 100 + ++T
   });
   await addroomSM.save();
   db.collection("managers").deleteOne({ message: rel });
