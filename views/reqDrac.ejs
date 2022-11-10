@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dear Monsters!</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bitter&family=Macondo&family=Playfair+Display&family=Roboto+Flex:opsz@8..144&display=swap"
+        rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="assets/CSS/mycss.css" />
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#!">
+                <h1>Welcome <%=username%></h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/yourb">Your Booking</a></li>
+=                    <li class="nav-item"><a class="nav-link" href="/">LogOut</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-5 bg-image-full" style="background-image: url('/img/room-2.jpg')">
+      <div class="text-center my-5">
+        
+
+          <section class="py-5-6">
+              <div class="container my-5">
+                  <div class="row justify-content-center">
+                      <div class="col-lg-6">
+                          <h2 class="manu">
+                            Oops! Seems like all the general rooms are occupied!
+                          </h2>
+                          <p class="lead manu">Humans can only be allotted special rooms with the permission of the owner of our Hotel,Count Dracula. </p>
+                          <p class="mb-0 manu">You do not have the liberty to bring more than one guest with you.Fill the following details thoroughly! </p>
+                         
+
+                              <form action="/HbookS" method="post">
+                                  <p class="pp">Choose your arrival date</p>
+                                  <input type="date" name="indate" min="2023-06-26" max="2023-06-27">
+                                  <p class="ppy">  When do you wish to checkout?</p>
+                                  <input type="date" name="outdate" min="2023-06-27" max="2023-06-27">
+                          
+                                  <p>  Your relationship with Mavis, the birthday girl- </p><input type="text" name="relation">
+
+                             
+                                  <p>Request the Count Dracula,owner of the hotel to let you stay in the special room:</p>
+                                  <input type="text" name="msg" id="">
+                                  <input type="submit" value="Send request!" name="finalRequest" id="sproom" />
+                              </form>
+                         
+                      </div>
+                  </div>
+              </div>
+          </section>
+
+
+      </div>
+  </header>
+
+
+    
+</body>
+</html>

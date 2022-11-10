@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>Dear Human</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bitter&family=Macondo&family=Playfair+Display&family=Roboto+Flex:opsz@8..144&display=swap"
+        rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="assets/CSS/mycss.css" />
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#!">
+                <h1>Welcome <%=username%></h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item "><a class="nav-link active" aria-current="page" href="/yourb">Your Bookings</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class=" py-5 bg-image-full" style="background-image: url('/img/speroom-2.jpg')">
+        <div class="text-center my-5">
+        
+            <section class="py-5-6">
+                <div class="container my-5">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+
+
+                            <p class="mb-0 manu"> Join us in Mavis's birthday party celebrations in Hotel Transylvania!
+                            </p>
+                            <br>
+
+
+                            <p class="lead manu">You can stay in our very comfortable General rooms having two double
+                                beds and a single one to accomodate your whole family!</p>
+                            <form action="/bookG" method="post">
+
+                                <p class="ppy"> Choose when you'll be arriving</p>
+                                <input type="date" name="indate" min="2023-06-21" max="2023-06-27" class="date">
+                               <p class="ppy"> Choose when you leave!</p>
+                                <input type="date" name="outdate" min="2023-06-27" max="2023-06-30">
+
+                                <p> Please enter number of rooms you need(max-1):</p>
+                                <input type="number" name="submitG" min="1" max="1" class="number">
+                                <input type="submit" value=" Book now!" name="submit" id="sproom" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+
+        </div>
+    </header>
+
+
+    <footer class="py-5-7 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white"> @Hotel Transylavia</p>
+        </div>
+    </footer>
+    <!--         
+        Join us in Mavis's birthday party celebrations in Hotel Transylvania!
+        Book your room here-
+        <form action="/humang" method="post">
+            General room-Two double beds + One single bed.
+            <button type="submit" class="box">Book Room</button><br><br>
+        </form> -->
+</body>
+
+</html>
